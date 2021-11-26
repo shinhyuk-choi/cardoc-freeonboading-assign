@@ -25,7 +25,7 @@ def download_car_info_list(trim_ids):
     return car_infos
 
 
-def get_front_and_rear_tires(car_info):
+def get_tire_from_car_info(car_info):
     front = car_info['spec']['driving']['frontTire']['value']
     rear = car_info['spec']['driving']['rearTire']['value']
     validate_tire_value_from_car_info(front)

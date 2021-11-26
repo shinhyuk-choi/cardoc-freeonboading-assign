@@ -3,9 +3,7 @@
 # 도메인 모델을 업데이트 한다
 # 변경된 내용을 역속화한다.
 from django.db import transaction
-from parse import parse
-
-from tire.logics import download_car_info_list, get_front_and_rear_tires
+from tire.logics import download_car_info_list, get_tire_from_car_info
 from tire.models import Tire, UserTire, DataUserTire
 from user.models import User
 
@@ -17,7 +15,7 @@ class TireService:
         car_infos = download_car_info_list(trim_ids)
         tires = []
         for i in car_infos:
-            tires.append(get_front_and_rear_tires(i))
+            tires.append(get_tire_from_car_info(i))
         with transaction.atomic():
             for_update = Tire.objects.filter(trim_id__in=trim_ids).values('id', 'trim_id')
             tire_for_update = []

@@ -1,4 +1,6 @@
 import asyncio, aiohttp
+import datetime
+
 from parse import parse
 from django.core.validators import RegexValidator
 
@@ -32,7 +34,7 @@ def get_tire_from_car_info(car_info):
     validate_tire_value_from_car_info(rear)
     front = parse('{f_width}/{f_profile}R{f_diameter}', front).named
     rear = parse('{r_width}/{r_profile}R{r_diameter}', rear).named
-    tire = Tire(trim_id=car_info['trimId'], **front, **rear)
+    tire = Tire(trim_id=car_info['trimId'], updated_at=datetime.datetime.now(), **front, **rear)
     return tire
 
 

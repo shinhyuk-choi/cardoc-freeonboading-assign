@@ -6,13 +6,14 @@ from rest_framework.authtoken.models import Token
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
+    token = serializers.SerializerMethodField()
 
     class Meta:
         model = User
         fields = (
-            'num_id',
             'id',
             'password',
+            'token',
         )
 
     def validate_password(self, value):
@@ -22,3 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
         user = super(UserSerializer, self).create(validated_data)
         Token.objects.create(user=user)
         return user
+
+    def get_token(self, user):
+        token, _ = Token.objects.get_or_create(user=user)
+        return token

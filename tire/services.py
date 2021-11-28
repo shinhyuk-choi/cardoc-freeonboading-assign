@@ -31,7 +31,17 @@ class TireService:
                     tire_for_create.append(tire)
 
             Tire.objects.bulk_create(tire_for_create)
-            # Tire.objects.bulk_update()
+            update_fields = [
+                'f_width',
+                'f_profile',
+                'f_diameter',
+                'r_width',
+                'r_profile',
+                'r_diameter',
+                'updated_at',
+            ]
+            Tire.objects.bulk_update(tire_for_update, update_fields)
+            return len(tire_for_create), len(tire_for_update)
 
 
 class UserTireInfoService:
@@ -48,3 +58,4 @@ class UserTireInfoService:
             data_user_tire_infos_from_db = set([DataUserTire(**i) for i in tire_infos_from_db])
             data_user_tire_infos_for_create = [UserTire(**i.__dict__) for i in list(data_user_tire_infos - data_user_tire_infos_from_db)]
             UserTire.objects.bulk_create(data_user_tire_infos_for_create)
+        return len(data_user_tire_infos_for_create)

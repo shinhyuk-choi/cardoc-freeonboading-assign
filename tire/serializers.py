@@ -10,16 +10,31 @@ class UserTireInfoInputSerializer(serializers.Serializer):
     def validate(self, data):
         return super(UserTireInfoInputSerializer, self).validate(data)
 
+
 class TireSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tire
-        fields='__all__'
+        exclude = (
+            'id',
+            'created_at',
+            'updated_at',
+        )
+
 
 class UserTireInfoSerializer(serializers.ModelSerializer):
     tire = TireSerializer()
 
     class Meta:
         model = UserTire
-        fields = '__all__'
+        exclude = (
+            'id',
+            'created_at',
+            'updated_at',
+            'user',
+        )
 
 
+class UserTireInfoResponseSerializer(serializers.Serializer):
+    count_create_tire = serializers.IntegerField()
+    count_update_tire = serializers.IntegerField()
+    count_create_user_tire_infos = serializers.IntegerField()

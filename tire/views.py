@@ -15,7 +15,7 @@ from tire.services import TireService, UserTireInfoService
 class UserTireViewSet(viewsets.GenericViewSet):
     queryset = UserTire.objects.all()
     # serializer_class = UserSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     @method_decorator(**UserTireSwaggerAutoSchema.create)
     def create(self, request):

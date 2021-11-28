@@ -1,3 +1,4 @@
+from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema, no_body
 
 from tire.serializers import UserTireInfoSerializer
@@ -9,7 +10,7 @@ class UserSwaggerAutoSchema:
         name="POST /users/",
         decorator=swagger_auto_schema(
             operation_id="사용자 생성",
-            operation_description="",
+            operation_description="Response에 password는 노출되지 않습니다",
             responses={
                 "200": UserSerializer(),
             }
@@ -20,7 +21,7 @@ class UserSwaggerAutoSchema:
         name="POST /users/login/",
         decorator=swagger_auto_schema(
             operation_id="사용자 로그인",
-            operation_description="",
+            operation_description="Response에 password는 노출되지 않습니다",
             responses={
                 "200": UserSerializer(),
             }
@@ -48,6 +49,8 @@ class UserSwaggerAutoSchema:
             """,
             responses={
                 "200": UserTireInfoSerializer(many=True),
-            }
+            },
+            manual_parameters=[openapi.Parameter('Authorization', openapi.IN_HEADER, description="Token {key}",
+                                                 type=openapi.TYPE_STRING)]
         )
     )

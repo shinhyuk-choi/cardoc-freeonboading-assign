@@ -1,3 +1,4 @@
+from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
 from tire.serializers import UserTireInfoInputSerializer, UserTireInfoResponseSerializer
@@ -12,6 +13,8 @@ class UserTireSwaggerAutoSchema:
             request_body=UserTireInfoInputSerializer(many=True),
             responses={
                 "200": UserTireInfoResponseSerializer(),
-            }
+            },
+            manual_parameters=[openapi.Parameter('Authorization', openapi.IN_HEADER, description="Token {key}",
+                                                 type=openapi.TYPE_STRING)]
         )
     )
